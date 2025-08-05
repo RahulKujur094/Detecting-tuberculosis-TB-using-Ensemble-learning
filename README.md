@@ -1,101 +1,133 @@
-# Tuberculosis
+# 🫁 Tuberculosis Detection using Model Ensemble
 
-Tuberculosis Detection using Model Ensemble 🫁🧠
-This repository presents a machine learning solution for detecting tuberculosis (TB) using ensemble learning. The pipeline involves training three different models and combining their predictions through averaging to produce a final submission file.
+This repository presents a machine learning solution for detecting **tuberculosis (TB)** using an **ensemble learning** approach. The pipeline involves training three different models and combining their predictions through simple averaging to produce a final submission file. This approach aims to improve prediction robustness and accuracy.
 
-📁 Repository Contents
-bash
-Copy
-Edit
-.
-├── tb1.ipynb                # First model notebook
-├── tb2.ipynb                # Second model notebook
-├── tb3.ipynb                # Third model notebook
-├── FinalAveraging.py       # Script to average predictions and generate final submission
-├── README.md               # Project documentation
-└── README_instructions.txt # Instructions outlining the project approach
-🧠 Project Overview
-To improve prediction robustness and accuracy, we created three different machine learning models trained on the same TB dataset. Each model produces a CSV file with predicted probabilities. These predictions are then combined via simple averaging, and the final output is binarized (threshold = 0.5) to generate the final submission file.
+---
 
-✅ Key Steps:
-Train 3 independent TB detection models (tb1.ipynb, tb2.ipynb, tb3.ipynb)
 
-Each model outputs predictions to a CSV file
 
-FinalAveraging.py:
 
-Loads the 3 prediction files
 
-Averages the Target values
+---
 
-Applies thresholding to convert to binary labels
+## 🧠 Project Overview
 
-Saves the final result to final_submission.csv
+To increase the accuracy of tuberculosis prediction, we trained **three different models** on the same TB dataset. Each model independently predicts the probability of TB presence and outputs a `.csv` file with predictions.
 
-🛠 Requirements
-Install the following packages:
+These predictions are then **combined using simple averaging**, and a **threshold of 0.5** is applied to convert the averaged probability into binary labels (0 or 1) for final submission.
 
-bash
-Copy
-Edit
+---
+
+## ✅ Pipeline Summary
+
+1. **Train 3 Independent Models**
+   - `tb1.ipynb` → outputs `tb_predictions1.csv`
+   - `tb2.ipynb` → outputs `tb_predictions2.csv`
+   - `tb3.ipynb` → outputs `tb_predictions3.csv`
+
+2. **Run the Ensemble Script**
+   - Edit file paths in `FinalAveraging.py`:
+     ```python
+     csv_files = [
+         "path/to/tb_predictions1.csv",
+         "path/to/tb_predictions2.csv",
+         "path/to/tb_predictions3.csv"
+     ]
+     ```
+   - Run:
+     ```bash
+     python FinalAveraging.py
+     ```
+
+3. **Final Output**
+   - `final_submission.csv` — contains averaged and thresholded predictions.
+
+---
+
+## 🛠 Requirements
+
+Install the required libraries:
+
+```bash
 pip install numpy pandas scikit-learn
-If you're using GPU-based deep learning models, you may also need:
+If your models use deep learning frameworks, install:
 
 bash
 Copy
 Edit
-pip install tensorflow or pip install torch torchvision
-(Specific dependencies may vary based on model architecture in the notebooks.)
+pip install tensorflow
+# or
+pip install torch torchvision
+🔍 Note: Check the individual notebooks for any model-specific dependencies.
 
 🚀 How to Run
-Train the models
-Run each of the following notebooks to generate 3 prediction CSV files:
+Train all three models:
 
-tb1.ipynb → outputs tb_predictions1.csv
+Run tb1.ipynb, tb2.ipynb, and tb3.ipynb
 
-tb2.ipynb → outputs tb_predictions2.csv
+Each will generate a CSV file with predicted probabilities
 
-tb3.ipynb → outputs tb_predictions3.csv
+Open FinalAveraging.py and update paths to point to your CSV files.
 
-Set correct file paths
-In FinalAveraging.py, set the paths to your prediction files accordingly:
-
-python
-Copy
-Edit
-csv_files = [
-    "path/to/tb_predictions1.csv",
-    "path/to/tb_predictions2.csv",
-    "path/to/tb_predictions3.csv"
-]
-Run the ensemble script
+Run the script:
 
 bash
 Copy
 Edit
 python FinalAveraging.py
-Output:
-
-final_submission.csv — the averaged and binarized predictions ready for submission.
+It will output final_submission.csv with final predictions.
 
 📊 Output Format
-The final submission CSV contains two columns:
+The output CSV file final_submission.csv will contain:
 
-Id: Sample identifier
+Id	Target
+1	0
+2	1
+3	0
 
-Target: 0 (No TB) or 1 (TB Present)
+Id: Unique sample identifier
+
+Target: 1 (TB detected), 0 (No TB)
 
 📌 Notes
-The final ensemble prediction uses a hard voting mechanism (threshold = 0.5).
+The ensemble prediction uses simple averaging followed by hard thresholding (>= 0.5 → 1, else 0)
 
-Ensure the predictions in the CSV files are aligned and sorted identically before averaging.
+Ensure the input prediction CSVs:
+
+Have the same number of rows
+
+Are sorted in the same order by Id
+
+No label leakage is assumed across models.
 
 ✨ Future Work
-Experiment with weighted averaging
+✅ Try weighted averaging for ensemble
 
-Explore stacking or blending approaches
+🔁 Implement stacking and blending for better performance
 
-Use additional ensemble techniques such as bagging and boosting
+🎯 Explore bagging and boosting methods
+
+📈 Perform error analysis on final predictions
+
+🧪 Add confidence intervals or uncertainty quantification
 
 📜 License
-This project is open-source and available under the MIT License
+This project is open-source and available under the MIT License.
+Feel free to use, modify, and distribute it.
+
+🙌 Acknowledgments
+Thanks to the open-source medical imaging community
+
+Inspired by Kaggle TB datasets and ensemble modeling practices
+
+Built using Python, NumPy, Pandas, and scikit-learn
+
+markdown
+Copy
+Edit
+
+Let me know if you'd also like me to generate:
+- `LICENSE`
+- `requirements.txt`
+- `FinalAveraging.py` (if not already written)  
+- or help you write the model notebooks (`tb1.ipynb`, etc.)
